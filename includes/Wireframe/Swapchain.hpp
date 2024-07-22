@@ -51,6 +51,9 @@ namespace Wireframe::Swapchain
 		//destroys a swapchain (destroys EVERYTHING)
 		inline void Destroy(const GPU::GPU* GPU)
 		{
+			if (swapchain == VK_NULL_HANDLE)
+				return;
+
 			vkDestroySwapchainKHR(GPU->device, swapchain, nullptr);
 
 			// destroy swapchain resources

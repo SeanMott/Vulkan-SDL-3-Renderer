@@ -250,28 +250,6 @@ inline void Shutdown_AllocateRenderTargets(vkutil::AllocatedImage& renderImage, 
 static inline bool Init_ImGUI(VkDescriptorPool& imguiPool,
 	BTD::Window::Window& window, Wireframe::GPU::GPU& GPU, Wireframe::Swapchain::DesktopSwapchain& swapchain)
 {
-	//0: initalize ImGUI functions
-	
-	//ImGui_ImplVulkan_LoadFunctions(vmafunc);
-	//vma_vulkan_func.vkBindBufferMemory = vkBindBufferMemory;
-	//vma_vulkan_func.vkBindImageMemory = vkBindImageMemory;
-	//vma_vulkan_func.vkCreateBuffer = vkCreateBuffer;
-	//vma_vulkan_func.vkCreateImage = vkCreateImage;
-	//vma_vulkan_func.vkDestroyBuffer = vkDestroyBuffer;
-	//vma_vulkan_func.vkDestroyImage = vkDestroyImage;
-	//vma_vulkan_func.vkFlushMappedMemoryRanges = vkFlushMappedMemoryRanges;
-	//vma_vulkan_func.vkFreeMemory = vkFreeMemory;
-	//vma_vulkan_func.vkGetBufferMemoryRequirements = vkGetBufferMemoryRequirements;
-	//vma_vulkan_func.vkGetImageMemoryRequirements = vkGetImageMemoryRequirements;
-	//vma_vulkan_func.vkGetPhysicalDeviceMemoryProperties = vkGetPhysicalDeviceMemoryProperties;
-	//vma_vulkan_func.vkGetPhysicalDeviceProperties = vkGetPhysicalDeviceProperties;
-	//vma_vulkan_func.vkInvalidateMappedMemoryRanges = vkInvalidateMappedMemoryRanges;
-	//vma_vulkan_func.vkMapMemory = vkMapMemory;
-	//vma_vulkan_func.vkUnmapMemory = vkUnmapMemory;
-	//vma_vulkan_func.vkCmdCopyBuffer = vkCmdCopyBuffer;
-	//vma_vulkan_func.vkGetInstanceProcAddr = vkGetInstanceProcAddr;
-	//vma_vulkan_func.vkGetDeviceProcAddr = vkGetDeviceProcAddr;
-
 	// 1: create descriptor pool for IMGUI
 	//  the size of the pool is very oversize, but it's copied from imgui demo
 	//  itself.
@@ -297,11 +275,29 @@ static inline bool Init_ImGUI(VkDescriptorPool& imguiPool,
 	VK_CHECK(vkCreateDescriptorPool(GPU.device, &pool_info, nullptr, &imguiPool));
 
 	// 2: initialize imgui library
-	//ImGui_ImplVulkan_LoadFunctions([](const char* function_name, void*) { return vkGetInstanceProcAddr(, function_name); });
-
+	// 
 	// this initializes the core structures of imgui
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+	//io.ConfigViewportsNoAutoMerge = true;
+	//io.ConfigViewportsNoTaskBarIcon = true;
+
+	// Setup Dear ImGui style
+	ImGui::StyleColorsDark();
+	//ImGui::StyleColorsClassic();
+
+	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
+	ImGuiStyle& style = ImGui::GetStyle();
+	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		style.WindowRounding = 0.0f;
+		style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+	}
 
 	// this initializes imgui for SDL
 	ImGui_ImplSDL3_InitForVulkan(window.window);

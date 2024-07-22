@@ -16,12 +16,12 @@ VMA_GIT_REPO_LINK = "https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAll
 VOLK_GIT_REPO_LINK = "https://github.com/zeux/volk.git"
 BOOTSTRAPPER_GIT_REPO_LINK = "https://github.com/charles-lunarg/vk-bootstrap.git"
 
-IMGUI_GIT_REPO_LINK = "https://github.com/ocornut/imgui.git"
+IMGUI_GIT_REPO_LINK = "https://github.com/SeanMott/imgui.git"
 
 #if the folder doesn't exist, we download it
-def GetIfNotThere(URL, outputDir):
+def GetIfNotThere(URL, outputDir, branch = "master"):
     if not os.path.exists(outputDir):
-        subprocess.run(["git", "clone", URL, outputDir],
+        subprocess.run(["git", "clone", "-b", branch, URL, outputDir],
         shell=True)
 
 #gets SDL 3
@@ -56,7 +56,7 @@ GetIfNotThere(VOLK_GIT_REPO_LINK, "Venders/Volk")
 GetIfNotThere(BOOTSTRAPPER_GIT_REPO_LINK, "Venders/VKBootstrap")
 
 #gets ImGUI
-GetIfNotThere(IMGUI_GIT_REPO_LINK, "Venders/ImGUI")
+GetIfNotThere(IMGUI_GIT_REPO_LINK, "Venders/ImGUI", branch = "docking")
 
 #generate Premake file
 premakeCode = """
