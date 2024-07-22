@@ -135,11 +135,11 @@ inline void Shutdown_EngineResources(BTD::Application::Application& app, BTD::Wi
 	//destroys swapchain
 	swapchain.Destroy(&GPU);
 
-	//destroy surface
-	window.DestroySurface(GPU.instance);
-
 	//clean up allocator
 	vmaDestroyAllocator(_allocator);
+
+	//destroy surface
+	window.DestroySurface(GPU.instance);
 
 	//destroy gpu
 	GPU.Destroy();
@@ -335,6 +335,7 @@ static inline bool Init_ImGUI(VkDescriptorPool& imguiPool,
 static inline void Shutdown_ImGUI(VkDescriptorPool& imguiPool, VkDevice& device)
 {
 	ImGui_ImplVulkan_Shutdown();
+	ImGui_ImplSDL3_Shutdown();
 	vkDestroyDescriptorPool(device, imguiPool, nullptr);
 }
 

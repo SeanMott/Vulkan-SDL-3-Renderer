@@ -23,15 +23,15 @@ namespace Wireframe::GPU
 	//defines a GPU
 	struct GPU
 	{
-		VkInstance instance;// Vulkan library handle
-		VkDebugUtilsMessengerEXT debugMessenger;// Vulkan debug output handle
+		VkInstance instance = VK_NULL_HANDLE;// Vulkan library handle
+		VkDebugUtilsMessengerEXT debugMessenger = VK_NULL_HANDLE;// Vulkan debug output handle
 		
-		VkPhysicalDevice chosenGPU;// GPU chosen as the default device
-		VkDevice device; // Vulkan device for commands
+		VkPhysicalDevice chosenGPU = VK_NULL_HANDLE;// GPU chosen as the default device
+		VkDevice device = VK_NULL_HANDLE; // Vulkan device for commands
 
 		//graphics queue
-		VkQueue graphicsQueue;
-		uint32_t graphicsQueueFamily;
+		VkQueue graphicsQueue = VK_NULL_HANDLE;
+		uint32_t graphicsQueueFamily = 0;
 
 		//present queue
 

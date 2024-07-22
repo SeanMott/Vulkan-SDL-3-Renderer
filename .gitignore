@@ -396,3 +396,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/bin-obj
+*.sln
+imgui.ini
+*.filters
+*.vcxproj
+/Venders
