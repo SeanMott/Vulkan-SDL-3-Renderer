@@ -15,12 +15,12 @@ namespace Wireframe::Swapchain
 	//defines a desktop swapchain
 	struct DesktopSwapchain
 	{
-		VkSwapchainKHR swapchain;
-		VkFormat swapchainImageFormat;
+		VkSwapchainKHR swapchain = VK_NULL_HANDLE;
+		VkFormat swapchainImageFormat = VK_FORMAT_UNDEFINED;
 
 		std::vector<VkImage> swapchainImages;
 		std::vector<VkImageView> swapchainImageViews;
-		VkExtent2D swapchainExtent;
+		VkExtent2D swapchainExtent = { 0, 0 };
 
 		//creates a swapchain (this is a fresh from scratch one)
 		inline bool Create(const DesktopSwapchainCreateInfo* info, const GPU::GPU* GPU, const BTD::Window::Window* window)

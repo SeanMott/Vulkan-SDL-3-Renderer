@@ -6,7 +6,7 @@ import subprocess
 import os
 
 #get repos
-SDL_GIT_REPO_LINK = "https://github.com/libsdl-org/SDL.git"
+SDL_GIT_REPO_LINK = "https://github.com/SeanMott/SDL.git"
 FMT_GIT_REPO_LINK = "https://github.com/fmtlib/fmt.git"
 GLM_GIT_REPO_LINK = "https://github.com/g-truc/glm.git"
 YAML_CPP_GIT_REPO_LINK = "https://github.com/jbeder/yaml-cpp.git"
@@ -25,7 +25,7 @@ def GetIfNotThere(URL, outputDir, branch = "master"):
         shell=True)
 
 #gets SDL 3
-GetIfNotThere(SDL_GIT_REPO_LINK, "Venders/SDL")
+GetIfNotThere(SDL_GIT_REPO_LINK, "Venders/SDL", branch = "main")
 
 #builds SDL 3
 subprocess.run(["cmake", "-S", "Venders/SDL", "-B", "Venders/SDL/Build"],
@@ -56,7 +56,7 @@ GetIfNotThere(VOLK_GIT_REPO_LINK, "Venders/Volk")
 GetIfNotThere(BOOTSTRAPPER_GIT_REPO_LINK, "Venders/VKBootstrap")
 
 #gets ImGUI
-GetIfNotThere(IMGUI_GIT_REPO_LINK, "Venders/ImGUI", branch = "docking")
+GetIfNotThere(IMGUI_GIT_REPO_LINK, "Venders/ImGUI")#, branch = "docking")
 
 #generate Premake file
 premakeCode = """
