@@ -135,11 +135,11 @@ inline void Shutdown_EngineResources(BTD::Application::Application& app, BTD::Wi
 	//destroys swapchain
 	swapchain.Destroy(&GPU);
 
-	//clean up allocator
-	vmaDestroyAllocator(_allocator);
-
 	//destroy surface
 	window.DestroySurface(GPU.instance);
+
+	//clean up allocator
+	vmaDestroyAllocator(_allocator);
 
 	//destroy gpu
 	GPU.Destroy();
@@ -322,7 +322,7 @@ static inline bool Init_ImGUI(VkDescriptorPool& imguiPool,
 
 	ImGui_ImplVulkan_Init(&init_info);
 
-	ImGui_ImplVulkan_CreateFontsTexture();
+	//ImGui_ImplVulkan_CreateFontsTexture();
 
 	return true;
 }
@@ -405,8 +405,6 @@ inline bool DrawFrame(Wireframe::GPU::GPU& GPU, Wireframe::Swapchain::DesktopSwa
 
 	//render the background
 	RenderOperation_Background(cmd, renderImage);
-
-	//run the indirect command buffer mesh renderer
 
 	//transition the draw image and the swapchain image into their correct transfer layouts
 	vkutil::transition_image(cmd, renderImage.image, VK_IMAGE_LAYOUT_GENERAL, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL);
@@ -559,6 +557,8 @@ int main()
 			//send SDL event to imgui for handling
 			ImGui_ImplSDL3_ProcessEvent(&e);
 		}
+		if (!window.isRunning)
+			break;
 
 		//---update
 
@@ -577,8 +577,24 @@ int main()
 		ImGui_ImplSDL3_NewFrame();
 		ImGui::NewFrame();
 
-		//some imgui UI to test
-		ImGui::ShowDemoWindow();
+		//widget for showing currently added assets and what are patched
+		if (ImGui::Begin("Asset Directory"))
+		{
+			//if no ISO is loaded
+
+			//ComputeEffect& selected = backgroundEffects[currentBackgroundEffect];
+
+			ImGui::Text("Selected effect: ", "Hello :3");
+
+			//ImGui::SliderInt("Effect Index", &currentBackgroundEffect, 0, backgroundEffects.size() - 1);
+
+			//ImGui::InputFloat4("data1", (float*)&selected.data.data1);
+			//ImGui::InputFloat4("data2", (float*)&selected.data.data2);
+			//ImGui::InputFloat4("data3", (float*)&selected.data.data3);
+			//ImGui::InputFloat4("data4", (float*)&selected.data.data4);
+
+			ImGui::End();
+		}
 
 		//make imgui calculate internal draw structures
 		ImGui::Render();
